@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #292929;
+    margin: 0;
+    padding: 20px;
+    p,h1,h2,h3,h4,h5,h6,li{color:aliceblue};
+}
+input {
+    padding: 8px;
+    margin: 5px;
+}
+
+button {
+    padding: 8px 12px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.recipeCard {
+    background: rgb(92, 37, 104);
+    padding: 15px;
+    margin: 10px auto;
+    border-radius: 10px;
+    max-width: 400px;
+}
