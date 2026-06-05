@@ -8,9 +8,12 @@ const recipeNameInput = document.getElementById("recipeName");
 const ingredientsInput = document.getElementById("ingredients");
 const output = document.getElementById("output");
 const recipeContainer = document.getElementById("recipeContainer");
+const groceryListContainer = document.getElementById("groceryListContainer");
 
 let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
 displayRecipes()
+
+let groceryList = []
 
 addBtn.addEventListener("click", addRecipe);
 recipeContainer.addEventListener("click", recipeCardClicked)
@@ -27,6 +30,32 @@ function recipeCardClicked(e) {
     if (action === "edit") {
         editRecipe(id);
     }
+    if (action === "addToList") {
+        addRecipeToList(id);
+    }
+}
+
+
+function addRecipeToList(id) {
+    const recipe = recipes.find(r => r.id === id); // Find the recipe
+
+    groceryList.push(...recipe.ingredients);
+    output.textContent = `Added ${recipe.name} to grocery list`;
+    
+    const combinedGroceryList = {};
+
+    groceryList.forEach(item => { //adds up all the ingredients
+        if (combinedGroceryList[item.name]) {
+            combinedGroceryList[item.name] += item.amount;
+        }
+        else {
+            combinedGroceryList[item.name] = item.amount;
+        }
+    });
+
+    groceryListContainer.innerHTML = Object.entries(combinedGroceryList)
+        .map(([name, amount]) => `<li style="list-style-type: none"><input type="checkbox">${amount} ${name}</li>`).join("");
+
 }
 
 
@@ -35,8 +64,8 @@ function editRecipe(id) {
 
     recipeNameInput.value = recipe.name
     ingredientsInput.value = recipe.ingredients
-        .map(i => `${i.amount}, ${i.name}`)
-        .join("; ");
+        .map(i => `${i.amount} ${i.name}`)
+        .join(", ");
     editingId = id;
     addBtn.textContent = "Save changes";
 }
@@ -59,6 +88,7 @@ function displayRecipes() {
             <h3>${recipe.name}</h3>
             <button class="delete-btn" data-action="delete" data-id="${recipe.id}">Delete</button>
             <button class="edit-btn" data-action="edit" data-id="${recipe.id}">Edit</button>
+            <button class="addToList-btn" data-action="addToList" data-id="${recipe.id}">Add to List</button>
             <ul>
                 ${recipe.ingredients.map(i => `<li>${i.amount} ${i.name}</li>`).join("")}
             </ul>
@@ -75,12 +105,12 @@ function addRecipe() {
             recipeNameInput.value.trim().charAt(0).toUpperCase() +
             recipeNameInput.value.trim().slice(1);
         const formattedIngredients = 
-            ingredientsInput.value.split(";")
+            ingredientsInput.value.split(",")
             .map(item => {
-                const parts = item.split(",");
+                const parts = item.trim().split(/\s+/);
                 return {
-                    amount: Number(parts[0]?.trim()),
-                    name: (parts[1] || "").trim().toLowerCase()
+                    amount: Number(parts[0].trim()),
+                    name: parts.slice(1).join(" ").toLowerCase()
                 };
             });
 
@@ -106,7 +136,7 @@ function addRecipe() {
             recipes.push(recipe);
         }
 
-        
+        output
         localStorage.setItem("recipes", JSON.stringify(recipes));
         displayRecipes();
         console.log(recipes);

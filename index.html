@@ -5,27 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Recipes to Groceries</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="RecipesToGroceriesLogo.png" type="image/x-icon">
 </head>
 
 
 
 <body>
-    <!--Quick reminder to self: to update with terminal: git add ., git commit -m "blahbalh", git push-->
-    <p>
-        
+    <!--Quick reminder to self: to update with terminal: git pull, git add ., git commit -m "blahbalh", git push-->
+    <div class="navBar">
+        <a href="index.html"><img src="RecipesToGroceriesLogo.png" width="60px"></a>
+        <h3>Recipes to Groceries</h3>
+    </div>
+    <div>
+        <p>
+            Put the recipe title in the first box, ingredients in the 2nd formatted like "1 tomato, 5 beans, 3 oranges" then add the recipe!
+        </p>
+        <input style="width: 200px" id="recipeName"><br>
+        <textarea style="width: 200px" id="ingredients"></textarea>
+        <button id="addBtn">Add Recipe</button>
+        <p id="output"></p>
+    </div>
+    
+    <div>
+        <h3>Grocery List:</h3>
+        <ul id="groceryListContainer"></ul>
+    </div>
 
-        This is my first try at making a website completely from scratch!<br>
-        Currently, I am working on the actual project but I'm just proud that I managed to create the website and connect it to VS Code.<br>
-        Have an awesome day!<br>
-        Put the recipe title in the first box, ingredients in the 2nd formatted like "1, tomato; 5, beans" then add the recipe!
-    </p>
-    <input id="recipeName">
-    <textarea id="ingredients"></textarea>
-    <button id="addBtn">Add Recipe</button>
-    <p id="output"></p>
-
-    <h2>Recipes</h2>
-    <div id="recipeContainer"></div>
+    <div>
+        <h2>Recipes</h2>
+        <div class="recipeContainer" id="recipeContainer"></div>
+    </div>
+    
 
 
 <script src="script.js"></script>
