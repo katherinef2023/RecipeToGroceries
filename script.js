@@ -127,12 +127,15 @@ function displayRecipes(recipeList=getAllRecipes()) {
         
         if (recipe.id<10000) {
             recipeCard.innerHTML = `
-                <h3>${recipe.name} (starter recipe)</h3>
+                <button class="toggle-btn" data-action="toggle" data-id="${recipe.id}">Show/Hide details</button>
                 <button class="addToList-btn" data-action="addToList" data-id="${recipe.id}">Add to List</button>
-                <ul>
-                    ${recipe.ingredients.map(i => `<li>${i.amount} ${i.name}</li>`).join("")}
-                </ul>
-                <p>${recipe.instructions}</p>
+                
+                <div class="details hidden" id="details-${recipe.id}">
+                    <ul>
+                        ${recipe.ingredients.map(i => `<li>${i.amount} ${i.name}</li>`).join("")}
+                    </ul>
+                    <p>${recipe.instructions}</p>
+                </div>
             `;
         }
         else{
