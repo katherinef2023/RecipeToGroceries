@@ -18,10 +18,11 @@
     </div>
     <div>
         <p>
-            Put the recipe title in the first box, ingredients in the 2nd formatted like "1 tomato, 5 beans, 3 oranges" then add the recipe!
+            Put the recipe title in the first box, ingredients in the 2nd formatted like "1 tomato, 5 beans, 3 oranges", and instructions in the 3rd box, then add the recipe!
         </p>
         <input style="width: 200px" id="recipeName"><br>
-        <textarea style="width: 200px" id="ingredients"></textarea>
+        <textarea style="width: 200px" id="ingredients"></textarea><br>
+        <textarea style="width: 200px" id="instructions"></textarea><br>
         <button id="addBtn">Add Recipe</button>
         <p id="output"></p>
     </div>
@@ -32,7 +33,12 @@
     </div>
 
     <div>
-        <h2>Recipes</h2>
+        
+        <div class="flex" style="margin:0px">
+            <h2>Recipe Search:</h2>
+            <input style="height:30px" id="recipeSearch">
+            <button id="searchBtn">Apply</button>
+        </div>
         <div class="recipeContainer" id="recipeContainer"></div>
     </div>
     
