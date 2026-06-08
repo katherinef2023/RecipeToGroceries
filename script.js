@@ -127,6 +127,7 @@ function displayRecipes(recipeList=getAllRecipes()) {
         
         if (recipe.id<10000) {
             recipeCard.innerHTML = `
+                <h3>${recipe.name}</h3>
                 <button class="toggle-btn" data-action="toggle" data-id="${recipe.id}">Show/Hide details</button>
                 <button class="addToList-btn" data-action="addToList" data-id="${recipe.id}">Add to List</button>
                 
