@@ -1,7 +1,7 @@
 <h1>Recipes to Groceries</h1>
 This will be a recipe sharing and grocery list making website where you can pick meals and automatically create a shopping list.
 <br><br>
-Test it <a href="https://katherinef2023.github.io/RecipeToGroceries/">here! </a>
+Test it <a target="_blank" href="https://katherinef2023.github.io/RecipeToGroceries/">here! </a>
 <br><br>
 <img width="1370" height="908" alt="recipesToGroceriesV1" src="https://github.com/user-attachments/assets/945ad092-abaf-4551-b4d6-f24a8e21739f" />
 <br><br>
