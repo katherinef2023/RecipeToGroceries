@@ -53,4 +53,10 @@ button {
 .hidden {
     max-height: 0px;
     opacity: 0;
+    display: none;
+}
+
+.signInSection{
+    display: flex;
+    align-items: right;
 }

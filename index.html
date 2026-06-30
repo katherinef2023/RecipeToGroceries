@@ -12,13 +12,27 @@
 
 <body>
     <!--Quick reminder to self: to update with terminal: git pull, git add ., git commit -m "blahbalh", git push-->
+    <!--Also do Ctrl + Shift + R to hard refresh-->
     <div class="navBar">
         <a href="index.html"><img src="RecipesToGroceriesLogo.png" width="60px"></a>
         <h3>Recipes to Groceries</h3>
+        <button id="accountBtn">Account login/signup/signout</button>
+
+
     </div>
+    <div class="signInSection hidden" id="signInSection">
+            <input id="emailInput" type="email" placeholder="Email">
+            <input id="passwordInput" type="password" placeholder="Password">
+            <button id="loginBtn">Log In</button>
+            <button id="signupBtn">Sign Up</button>
+            <button id="logoutBtn">Log Out</button>
+    </div>
+
+    
     <div>
         <p>
             Put the recipe title in the first box, ingredients in the 2nd formatted like "1 tomato, 5 beans, 3 oranges", and instructions in the 3rd box, then add the recipe!
+            <br> Please don't mind the awful formatting. I will fix this all later and make it pretty, but I'm just getting the basic javascript up and working first.
         </p>
         <input style="width: 200px" id="recipeName"><br>
         <textarea style="width: 200px" id="ingredients"></textarea><br>
@@ -44,7 +58,7 @@
     
 
 
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 </body>
 
 </html>
