@@ -2,9 +2,12 @@ console.log("congrats it loaded");
 
 
 
-// I HAVE NO IDEA WHAT I'M DOING-------------------------------------------------------
+//------------------------------------ Imports -----------------------------------------
 
-// Import the functions you need from the SDKs you need
+import Fuse from "https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.esm.js";
+
+// -------------------------------- Firebase stuff -------------------------------------
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 import {
     getFirestore,
@@ -25,7 +28,6 @@ import {
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 
-// Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
 apiKey: "AIzaSyAvTWKk-UGmyQExpXNVumEUz6qy8iaq05M",
@@ -44,6 +46,8 @@ const auth = getAuth(app);
 
 
 
+//------------------------- Sign up, sign out, log in ----------------------------------
+
 const emailInput = document.getElementById("emailInput");
 const passwordInput = document.getElementById("passwordInput");
 const signupBtn = document.getElementById("signupBtn");
@@ -54,6 +58,7 @@ const logoutBtn = document.getElementById("logoutBtn");
 signupBtn.addEventListener("click", signUp);
 loginBtn.addEventListener("click", logIn);
 logoutBtn.addEventListener("click", logOut);
+
 
 async function signUp() {
     try {
@@ -69,8 +74,14 @@ async function signUp() {
         output.textContent = "Account created!";
     }
     catch (error) {
-        output.textContent = error.message;
+        if (error.message === "Firebase: Error (auth/invalid-email).") {
+            output.textContent = "Invalid email address"
+        }
+        else {
+            output.textContent = error.message;
+        }
     }
+    loginOverlay.classList.toggle("hidden");
 }
 
 async function logIn() {
@@ -83,6 +94,7 @@ async function logIn() {
             );
 
         output.textContent = "Logged in!";
+        loginOverlay.classList.toggle("hidden");
     }
     catch (error) {
         output.textContent = error.message;
@@ -93,10 +105,11 @@ async function logOut() {
     await signOut(auth);
 
     output.textContent = "Logged out!";
+    loginOverlay.classList.toggle("hidden");
 }
 
 
-
+//--------------------------------- Authorization --------------------------------------
 
 let currentUser = null;
 let userRecipes = []
@@ -106,7 +119,7 @@ onAuthStateChanged(auth, (user) => {
 
     if (user) {
         console.log("Logged in as:", user.email);
-        loadRecipes(user);
+        loadUserRecipes(user);
     } else {
         console.log("Logged out");
         userRecipes = [];
@@ -114,11 +127,42 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
+
+
+
+//-------------------------------- Initializes all the elements -----------------------
+
+const navMenuBtn = document.getElementById("navMenuBtn")
+const navMenu = document.getElementById("navMenu")
+const groceryListBoxBtn = document.getElementById("groceryListBoxBtn")
+const groceryListBox = document.getElementById("groceryListBox")
+const addRecipesBoxBtn = document.getElementById("addRecipesBoxBtn")
+const addRecipesBox = document.getElementById("addRecipesBox")
+const accountBtn = document.getElementById("accountBtn");
+const loginOverlay = document.getElementById("loginOverlay");
+const searchBtn = document.getElementById("searchBtn");
+const addBtn = document.getElementById("addBtn");
+const recipeNameInput = document.getElementById("recipeName");
+const ingredientsInput = document.getElementById("ingredients");
+const instructionsInput = document.getElementById("instructions");
+const searchInput = document.getElementById("recipeSearch");
+const output = document.getElementById("output");
+const recipeContainer = document.getElementById("recipeContainer");
+const groceryListContainer = document.getElementById("groceryListContainer");
+const backgroundOverlay = document.querySelectorAll(".backgroundOverlay")
+const groceryList = []
+
+
+//------------------------------- Loading recipes ---------------------------------
+
+
+//Path for all the user recipes
 function userRecipesRef() {
     return collection(db, "users", currentUser.uid, "recipes");
 }
 
-async function loadRecipes() {
+//Loads the user recipes
+async function loadUserRecipes() {
     if (!currentUser) return;
 
     const snapshot = await getDocs(userRecipesRef());
@@ -135,33 +179,7 @@ async function loadRecipes() {
     displayRecipes(getAllRecipes());
 }
 
-
-//:sob: thank you chat GPT for doing this cuz i dont really understand it ------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-const accountBtn = document.getElementById("accountBtn");
-const searchBtn = document.getElementById("searchBtn");
-const addBtn = document.getElementById("addBtn");
-const recipeNameInput = document.getElementById("recipeName");
-const ingredientsInput = document.getElementById("ingredients");
-const instructionsInput = document.getElementById("instructions");
-const searchInput = document.getElementById("recipeSearch");
-const output = document.getElementById("output");
-const recipeContainer = document.getElementById("recipeContainer");
-const groceryListContainer = document.getElementById("groceryListContainer");
-
-
-// NO LONGER USING: JSON.parse(localStorage.getItem("recipes")) || [];
-
-//load starting recipes
+//Loads starting recipes
 const starterRecipes = []
 async function loadStarterRecipes() {
     const response = await fetch("starterRecipes.json");
@@ -171,29 +189,51 @@ async function loadStarterRecipes() {
 loadStarterRecipes();
 
 
-function iHateAddingRecipesManually() {
-    const jsonText = JSON.stringify(userRecipes, null, 2);
-    console.log(jsonText)
-}
-
 function getAllRecipes() {
     return [...userRecipes, ...starterRecipes];
 }
 
 
-displayRecipes(getAllRecipes())
+function iHateAddingRecipesManually() {
+    const jsonText = JSON.stringify(userRecipes, null, 2);
+    console.log(jsonText)
+}
 
-const groceryList = []
 
 
 //------------------------------------ Reading input clicks  ------------------------------------//
 addBtn.addEventListener("click", addRecipe);
 searchBtn.addEventListener("click", searchRecipe);
 recipeContainer.addEventListener("click", recipeCardClicked);
+
 accountBtn.addEventListener("click", accountBtnClicked);
+navMenuBtn.addEventListener("click", navMenuClicked);
+groceryListBoxBtn.addEventListener("click", groceryListBtnClicked);
+addRecipesBoxBtn.addEventListener("click", addRecipesBoxBtnClicked);
+backgroundOverlay.forEach(overlay => {
+    overlay.addEventListener("click", hideOverlay);
+});
+
+function groceryListBtnClicked () {
+    groceryListBox.classList.toggle("hidden");
+}
+
+function addRecipesBoxBtnClicked () {
+    addRecipesBox.classList.toggle("hidden");
+}
+
+function navMenuClicked() {
+    navMenu.classList.toggle("hidden");
+}
 
 function accountBtnClicked() {
-    document.getElementById(`signInSection`).classList.toggle("hidden");
+    loginOverlay.classList.toggle("hidden");
+}
+
+function hideOverlay(e) {
+    if (e.target.classList.contains("backgroundOverlay")) {
+        e.target.classList.add("hidden");
+    }
 }
 
 function recipeCardClicked(e) {
@@ -215,36 +255,12 @@ function recipeCardClicked(e) {
 }
 
 
-//------------------------------------ Adding stuff to grocery list ------------------------------------//
-function addRecipeToList(id) {
-    const recipe = getAllRecipes().find(r => r.id === id); // Find the recipe
-
-    groceryList.push(...recipe.ingredients);
-    output.textContent = `Added ${recipe.name} to grocery list`;
-    
-    const combinedGroceryList = {};
-
-    groceryList.forEach(item => { //adds up all the ingredients
-        if (combinedGroceryList[item.name]) {
-            combinedGroceryList[item.name] += item.amount;
-        }
-        else {
-            combinedGroceryList[item.name] = item.amount;
-        }
-    });
-
-    groceryListContainer.innerHTML = Object.entries(combinedGroceryList)
-        .map(([name, amount]) => `<li style="list-style-type: none"><input type="checkbox">${amount} ${name}</li>`).join("");
-
-}
-
-
 //------------------------------------ Search, edit, and delete Recipes ------------------------------------//
 let editingId = null;
 
 function editRecipe(id) {
     
-    console.log("added the thing")
+    console.log("editing the thing")
     const recipe = userRecipes.find(r => r.id === id);
 
     recipeNameInput.value = recipe.name;
@@ -254,6 +270,7 @@ function editRecipe(id) {
         .join(", ");
     editingId = id;
     addBtn.textContent = "Save changes";
+    addRecipesBox.classList.toggle("hidden"); 
 }
 
 
@@ -265,11 +282,22 @@ async function deleteRecipe(id){
 }
 
 
+//searching
+
+
 function searchRecipe() {
-    const recipesSearched = getAllRecipes().filter(recipe => 
-        recipe.name.toLowerCase().includes(searchInput.value.toLowerCase()));
-    displayRecipes(recipesSearched)
-    iHateAddingRecipesManually(); //DELETE LATER ...................................
+    
+    const fuse = new Fuse(getAllRecipes(), {
+        keys: ["name"],
+        threshold: 0.4
+    });
+
+
+    const query = searchInput.value.trim().toLowerCase();
+    const matches = query? fuse.search(query).map(r => r.item) : getAllRecipes();
+
+    displayRecipes(matches);
+    iHateAddingRecipesManually();
 }
 
 
@@ -291,7 +319,7 @@ function displayRecipes(recipeList=getAllRecipes()) {
                     <ul>
                         ${recipe.ingredients.map(i => `<li>${i.amount} ${i.name}</li>`).join("")}
                     </ul>
-                    <p>${recipe.instructions}</p>
+                    <p style="white-space: pre-line" >${recipe.instructions}</p>
                 </div>
             `;
         }
@@ -321,10 +349,11 @@ function toggleDetails(id) {
     document.getElementById(`details-${id}`).classList.toggle("hidden");
 }
 
-//------------------------------------ Adding Recipes ------------------------------------//
+//------------------------------------ Adding Recipes ------------------------------------
 async function addRecipe() {
     if (!currentUser) {
     output.textContent = "You must be logged in to add recipes";
+    addRecipesBox.classList.toggle("hidden"); 
     return;
 }
     if (recipeNameInput.value.trim() && ingredientsInput.value.trim() && instructionsInput.value.trim()) {
@@ -395,5 +424,54 @@ async function addRecipe() {
     else {
         output.textContent = "Please put a recipe title, ingredient list, and instructions."
     }
-        
+    addRecipesBox.classList.toggle("hidden"); 
+}
+
+
+//------------------------------------ Adding stuff to grocery list ------------------------------------//
+function addRecipeToList(id) {
+    const recipe = getAllRecipes().find(r => r.id === id); // Find the recipe
+
+    groceryList.push(...recipe.ingredients);
+    output.textContent = `Added ${recipe.name} to grocery list`;
+    
+    const combinedGroceryList = {};
+
+    groceryList.forEach(item => { //adds up all the ingredients
+
+        const normalizedName = normalizeIngredients(item.name)
+        const match = findMatch(normalizedName, combinedGroceryList)
+
+
+        if (combinedGroceryList[match]) {
+            combinedGroceryList[match] += item.amount;
+        }
+        else {
+            combinedGroceryList[normalizedName] = item.amount;
+        }
+    });
+
+    groceryListContainer.innerHTML = Object.entries(combinedGroceryList)
+        .map(([name, amount]) => `<li style="list-style-type: none"><input type="checkbox">${amount} ${name}</li>`).join("");
+
+}
+
+function normalizeIngredients(name) {
+    return name
+    .toLowerCase()
+    .trim()
+    .replace(/ies$/, "y")
+    .replace(/ves$/, "f")
+    .replace(/es$/, "")
+    .replace(/s$/, "");
+}
+
+function findMatch(name, combinedList) {
+    const fuse = new Fuse(Object.keys(combinedList), { //imported from Fuse
+        threshold: 0.4,
+        ignoreLocation: true
+    });
+
+    const result = fuse.search(name);
+    return result.length>0? result[0].item : null; // "C ? A : B" means if C then A and if not C then B.
 }

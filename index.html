@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Recipes to Groceries</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="RecipesToGroceriesLogo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Josefin+Sans">
+    <link rel="icon" href="images/RecipesToGroceriesLogo.png" type="image/x-icon">
 </head>
 
 
@@ -14,36 +15,58 @@
     <!--Quick reminder to self: to update with terminal: git pull, git add ., git commit -m "blahbalh", git push-->
     <!--Also do Ctrl + Shift + R to hard refresh-->
     <div class="navBar">
-        <a href="index.html"><img src="RecipesToGroceriesLogo.png" width="60px"></a>
+        <a href="index.html"><img src="images/RecipesToGroceriesLogo.png" width="60px"></a>
         <h3>Recipes to Groceries</h3>
-        <button id="accountBtn">Account login/signup/signout</button>
-
-
+        <button id="navMenuBtn"><h1 style="margin:0">≡</h1></button>
+        <button id="accountBtn"><img src="images/profileImagePlaceholder.png"></button>
     </div>
-    <div class="signInSection hidden" id="signInSection">
+    
+    <div id="navMenu" class="hidden">
+        <button id="groceryListBoxBtn">Grocery List</button>
+        <button id="addRecipesBoxBtn">Add a recipe</button>
+    </div>
+
+
+    <div id="loginOverlay" class="backgroundOverlay hidden">
+        <div id="signInSection">
+            <h2>Log in</h2>
+            <p style="margin:0">Note that I don't use the email for anything, it is simply a username for your account :)</p>
             <input id="emailInput" type="email" placeholder="Email">
             <input id="passwordInput" type="password" placeholder="Password">
             <button id="loginBtn">Log In</button>
             <button id="signupBtn">Sign Up</button>
             <button id="logoutBtn">Log Out</button>
+        </div>
     </div>
 
-    
     <div>
         <p>
-            Put the recipe title in the first box, ingredients in the 2nd formatted like "1 tomato, 5 beans, 3 oranges", and instructions in the 3rd box, then add the recipe!
-            <br> Please don't mind the awful formatting. I will fix this all later and make it pretty, but I'm just getting the basic javascript up and working first.
+            Please don't mind the awful formatting. I will fix this all later and make it pretty, but I'm just getting the basic javascript up and working first.
+            <br> Click the menu button to add recipes and look at your grocery list!
         </p>
-        <input style="width: 200px" id="recipeName"><br>
-        <textarea style="width: 200px" id="ingredients"></textarea><br>
-        <textarea style="width: 200px" id="instructions"></textarea><br>
-        <button id="addBtn">Add Recipe</button>
-        <p id="output"></p>
+        <p id="output" style="color: yellow"></p>
     </div>
     
-    <div>
-        <h3>Grocery List:</h3>
-        <ul id="groceryListContainer"></ul>
+
+    <div id="addRecipesBox" class="backgroundOverlay hidden">
+        <div class="prettyOverlayFront">
+            <p>
+                Put the recipe title in the first box, ingredients in the 2nd formatted like "1 tomato, 5 beans, 3 oranges", and instructions in the 3rd box, then add the recipe!
+            </p>
+            <input placeholder="Recipe Name" id="recipeName"><br>
+            <textarea placeholder="Ingredients (ex. '1 Tomato, 4 eggs')" id="ingredients"></textarea><br>
+            <textarea placeholder="Instructions" id="instructions"></textarea><br>
+            <button id="addBtn">Add Recipe</button>
+        </div>
+        
+    </div>
+    
+    <div id="groceryListBox" class="backgroundOverlay hidden">
+        <div class="prettyOverlayFront">
+            <h3>Grocery List:</h3>
+            <ul id="groceryListContainer"> Nothing's here yet; add some recipes!</ul>
+            <p>List is prone to bad grammar and spelling, sorry!</p>
+        </div>
     </div>
 
     <div>

@@ -37,7 +37,7 @@
         "name": "teaspoon lemon zest"
       }
     ],
-    "instructions": "Preheat oven to 350F. (Adjusting rack so it is in the middle of the oven)\nFor the crust: \nIn a food processor (or blender) mix the flour and brown sugar until fully incorporated. Add COLD butter to the flour mixture and pulse, using short bursts, until the butter is cut into tiny pea-sized pieces and the dough appears lumpy.\nSpread dough as evenly as possible in an ungreased 13 x 9 x 2 pan. Press down with a spatula to create a packed surface. Place pan in the center of oven and bake until golden, approx. 20 mins).\nFor the filling:\nIn a medium bowl, beat eggs with an electric mixer until well blended. Add vanilla extract and ¾ cup powdered sugar and mix well. Add lemon juice and remaining powdered sugar. Continue to mix until powdered sugar is dissolved, mix in lemon zest.\nRemove crust from oven and reduce oven temperature to 300F. Immediately pour lemon filling mixture over hot crust. Return to oven and continue to cook for an additional 30 mins. Cool bars completely before cutting. Sprinkle with powdered sugar and serve. Recipe from https://www.simplehealthykitchen.com/lemon-bars/#recipe"
+    "instructions": "Preheat oven to 350F. (Adjusting rack so it is in the middle of the oven)\n\nFor the crust: \nIn a food processor (or blender) mix the flour and brown sugar until fully incorporated. Add COLD butter to the flour mixture and pulse, using short bursts, until the butter is cut into tiny pea-sized pieces and the dough appears lumpy.\n\nSpread dough as evenly as possible in an ungreased 13 x 9 x 2 pan. Press down with a spatula to create a packed surface. Place pan in the center of oven and bake until golden, approx. 20 mins).\nFor the filling:\nIn a medium bowl, beat eggs with an electric mixer until well blended. Add vanilla extract and ¾ cup powdered sugar and mix well. Add lemon juice and remaining powdered sugar. Continue to mix until powdered sugar is dissolved, mix in lemon zest.\nRemove crust from oven and reduce oven temperature to 300F. Immediately pour lemon filling mixture over hot crust. Return to oven and continue to cook for an additional 30 mins. Cool bars completely before cutting. Sprinkle with powdered sugar and serve.\n\n Recipe from https://www.simplehealthykitchen.com/lemon-bars/#recipe"
   },
 
   {
@@ -71,6 +71,55 @@
       }
     ],
     "instructions": "Warm up tortillas. Cook chicken in pan and add cut up bell peppers and orange juice. Cook 3 minutes. Make burrito with avocado, chicken/pepper fajitas, and cheese. Enjoy!"
-  }
+  },
   
+{
+    "id": "starter3",
+    "name": "Chocolate Chip Cookies",
+    "ingredients": [
+      {
+        "amount": 1,
+        "name": "cup salted butter softened"
+      },
+      {
+        "amount": 1,
+        "name": "cup granulated sugar"
+      },
+      {
+        "amount": 1,
+        "name": "cup light brown sugar packed"
+      },
+      {
+        "amount": 2,
+        "name": "teaspoons pure vanilla extract"
+      },
+      {
+        "amount": 2,
+        "name": "large eggs"
+      },
+      {
+        "amount": 3,
+        "name": "cups all-purpose flour"
+      },
+      {
+        "amount": 1,
+        "name": "teaspoon baking soda"
+      },
+      {
+        "amount": 0.5,
+        "name": "teaspoon baking powder"
+      },
+      {
+        "amount": 1,
+        "name": "teaspoon sea salt"
+      },
+      {
+        "amount": 2,
+        "name": "cups chocolate chips (12 oz)"
+      }
+    ],
+    "instructions": "Preheat oven to 375 degrees Fahrenheit (190 degrees Celsius). Line three baking sheets with parchment paper and set aside.\nIn a medium bowl mix flour, baking soda, baking powder and salt. Set aside.\n\nCream together butter and sugars until combined.\nBeat in eggs and vanilla until light (about 1 minute).\nMix in the dry ingredients until combined.\nAdd chocolate chips and mix well.\nRoll 2-3 Tablespoons (depending on how large you like your cookies) of dough at a time into balls and place them evenly spaced on your prepared cookie sheets.\nBake in preheated oven for approximately 8-10 minutes. Take them out when they are just barely starting to turn brown.\nLet them sit on the baking pan for 5 minutes before removing to cooling rack.\n\nRecipe from https://joyfoodsunshine.com/the-most-amazing-chocolate-chip-cookies/#wprm-recipe-container-8678",
+    "source": "starter"
+  }
+
 ]
