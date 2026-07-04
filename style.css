@@ -12,9 +12,10 @@ div {
 button {
     padding: 5px;
     margin: 5px;
+    color: black;
     cursor: pointer;
     background-color:rgb(210, 200, 220);
-    border-radius: 10%;
+    border-radius: 5px;
     font-family: 'Josefin Sans', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -152,7 +153,10 @@ input[type="checkbox"] {
     padding: 25px;
     border-radius: 12px;
     width: 50%;
-    min-width: 350px;
+    min-width: 400px;
+    
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
 }
 
 #addRecipeFromURLBox {
