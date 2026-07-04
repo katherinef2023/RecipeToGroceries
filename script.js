@@ -316,6 +316,7 @@ function displayRecipes(recipeList=getAllRecipes()) {
         recipeCard.classList.add("recipeCard");
         
         if (recipe.source==="starter") {
+            recipeCard.style.backgroundColor = "rgb(63, 61, 133)";
             recipeCard.innerHTML = `
                 <h3>${recipe.name}</h3>
                 <button class="toggle-btn" data-action="toggle" data-id="${recipe.id}">Show/Hide details</button>

@@ -161,8 +161,36 @@
     ],
     "instructions": "Preheat the oven to 350°F (175°C):\nButter an 8x4-inch loaf pan.\n\nIn a mixing bowl, mash the ripe bananas with a fork until completely smooth. Stir the melted butter into the mashed bananas.\n\nMix in the baking soda and salt. Stir in the sugar, beaten egg, and vanilla extract. Mix in the flour and cinnamon.\n\nPour the batter into your prepared loaf pan.\n\nBake for 55 to 65 minutes at 350°F (175°C), or until a toothpick or wooden skewer inserted into the center comes out clean. A few dry crumbs are okay; streaks of wet batter are not. If the outside of the loaf is browned but the center is still wet, loosely tent the loaf with foil and continue baking until the loaf is fully baked.\n\nCool and serve:\nRemove from oven and let cool in the pan for a few minutes. Then remove the banana bread from the pan and let cool completely before serving. Slice and serve. (A bread knife helps to make slices that aren't crumbly.)\n\nWrapped well, the banana bread will keep at room temperature for 4 days. For longer storage, refrigerate the loaf up to 5 days, or freeze it.\n\nRecipe from https://www.simplyrecipes.com/recipes/banana_bread/",
     "source": "starter"
-  }
+  },
 
+{
+    "id": "starter5",
+    "name": "Grilled Cheese",
+    "source": "starter",
+    "instructions": "Heat tomato soup on medium heat in a pot. Heat a pan on medium high with butter, then put the cheese inside bread onto the pan. Spread half of the mayo on top and cook 30 seconds. Flip sandwich and spread the other half of the mayo. Grill and flip until toast is browned to your liking. \n\nSlice sandwiches into triangles and serve with soup.",
+    "ingredients": [
+      {
+        "name": "slices of cheddar cheese",
+        "amount": 2
+      },
+      {
+        "name": "slices of bread",
+        "amount": 2
+      },
+      {
+        "name": "teaspoon mayo",
+        "amount": 1
+      },
+      {
+        "name": "tablespoon butter",
+        "amount": 1
+      },
+      {
+        "name": "cup tomato soup",
+        "amount": 1
+      }
+    ]
+  }
 
 
 
