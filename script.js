@@ -45,14 +45,44 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 
+//-------------------------------- Initializes all the elements -----------------------
+
+const $ = (id) => document.getElementById(id);
+
+const navMenuBtn = $("navMenuBtn");
+const navMenu = $("navMenu");
+const groceryListBoxBtn = $("groceryListBoxBtn");
+const groceryListBox = $("groceryListBox");
+const addRecipesBoxBtn = $("addRecipesBoxBtn");
+const addRecipesBox = $("addRecipesBox")
+const accountBtn = $("accountBtn");
+const loginOverlay = $("loginOverlay");
+const searchBtn = $("searchBtn");
+const addBtn = $("addBtn");
+const recipeNameInput = $("recipeNameInput");
+const ingredientsInput = $("ingredientsInput");
+const instructionsInput = $("instructionsInput");
+const searchInput = $("searchInput");
+const output = $("output");
+const recipeContainer = $("recipeContainer");
+const groceryListContainer = $("groceryListContainer");
+const addRecipeFromURLBtn = $("addRecipeFromURLBtn");
+const addRecipeFromURLBox = $("addRecipeFromURLBox");
+const addRecipeFromURLBoxText = $("addRecipeFromURLBoxText");
+const tryURLBtn = $("tryURLBtn");
+const addRecipeURL = $("addRecipeURL")
+
+const backgroundOverlay = document.querySelectorAll(".backgroundOverlay");
+const groceryList = [];
+
 
 //------------------------- Sign up, sign out, log in ----------------------------------
 
-const emailInput = document.getElementById("emailInput");
-const passwordInput = document.getElementById("passwordInput");
-const signupBtn = document.getElementById("signupBtn");
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
+const emailInput = $("emailInput");
+const passwordInput = $("passwordInput");
+const signupBtn = $("signupBtn");
+const loginBtn = $("loginBtn");
+const logoutBtn = $("logoutBtn");
 
 
 signupBtn.addEventListener("click", signUp);
@@ -129,31 +159,8 @@ onAuthStateChanged(auth, (user) => {
 
 
 
-
-//-------------------------------- Initializes all the elements -----------------------
-
-const navMenuBtn = document.getElementById("navMenuBtn")
-const navMenu = document.getElementById("navMenu")
-const groceryListBoxBtn = document.getElementById("groceryListBoxBtn")
-const groceryListBox = document.getElementById("groceryListBox")
-const addRecipesBoxBtn = document.getElementById("addRecipesBoxBtn")
-const addRecipesBox = document.getElementById("addRecipesBox")
-const accountBtn = document.getElementById("accountBtn");
-const loginOverlay = document.getElementById("loginOverlay");
-const searchBtn = document.getElementById("searchBtn");
-const addBtn = document.getElementById("addBtn");
-const recipeNameInput = document.getElementById("recipeName");
-const ingredientsInput = document.getElementById("ingredients");
-const instructionsInput = document.getElementById("instructions");
-const searchInput = document.getElementById("recipeSearch");
-const output = document.getElementById("output");
-const recipeContainer = document.getElementById("recipeContainer");
-const groceryListContainer = document.getElementById("groceryListContainer");
-const backgroundOverlay = document.querySelectorAll(".backgroundOverlay")
-const groceryList = []
-
-
 //------------------------------- Loading recipes ---------------------------------
+
 
 
 //Path for all the user recipes
@@ -202,39 +209,40 @@ function iHateAddingRecipesManually() {
 
 
 //------------------------------------ Reading input clicks  ------------------------------------//
+
+
 addBtn.addEventListener("click", addRecipe);
 searchBtn.addEventListener("click", searchRecipe);
 recipeContainer.addEventListener("click", recipeCardClicked);
 
-accountBtn.addEventListener("click", accountBtnClicked);
-navMenuBtn.addEventListener("click", navMenuClicked);
-groceryListBoxBtn.addEventListener("click", groceryListBtnClicked);
-addRecipesBoxBtn.addEventListener("click", addRecipesBoxBtnClicked);
+
+//overlay handler
 backgroundOverlay.forEach(overlay => {
     overlay.addEventListener("click", hideOverlay);
 });
-
-function groceryListBtnClicked () {
-    groceryListBox.classList.toggle("hidden");
-}
-
-function addRecipesBoxBtnClicked () {
-    addRecipesBox.classList.toggle("hidden");
-}
-
-function navMenuClicked() {
-    navMenu.classList.toggle("hidden");
-}
-
-function accountBtnClicked() {
-    loginOverlay.classList.toggle("hidden");
-}
 
 function hideOverlay(e) {
     if (e.target.classList.contains("backgroundOverlay")) {
         e.target.classList.add("hidden");
     }
 }
+
+
+//Connects toggle buttons up to their respective elements on the page
+const toggles = [
+    [accountBtn, loginOverlay],
+    [navMenuBtn, navMenu],
+    [groceryListBoxBtn, groceryListBox],
+    [addRecipesBoxBtn, addRecipesBox],
+    [addRecipeFromURLBtn, addRecipeFromURLBox]
+]
+
+//gives each button an event listener to hide stuff
+toggles.forEach(([btn, element]) => {
+    btn.addEventListener("click", () => element.classList.toggle("hidden"));
+})
+
+
 
 function recipeCardClicked(e) {
     const action = e.target.dataset.action;
@@ -255,7 +263,7 @@ function recipeCardClicked(e) {
 }
 
 
-//------------------------------------ Search, edit, and delete Recipes ------------------------------------//
+//----------------------------- Search, edit, and delete Recipes ------------------------------------//
 let editingId = null;
 
 function editRecipe(id) {
@@ -283,8 +291,6 @@ async function deleteRecipe(id){
 
 
 //searching
-
-
 function searchRecipe() {
     
     const fuse = new Fuse(getAllRecipes(), {
@@ -336,7 +342,7 @@ function displayRecipes(recipeList=getAllRecipes()) {
                     <ul>
                         ${recipe.ingredients.map(i => `<li>${i.amount} ${i.name}</li>`).join("")}
                     </ul>
-                    <p>${recipe.instructions}</p>
+                    <p style="white-space: pre-line" >${recipe.instructions}</p>
                 </div>
             `;
         }
@@ -346,7 +352,7 @@ function displayRecipes(recipeList=getAllRecipes()) {
 
 
 function toggleDetails(id) {
-    document.getElementById(`details-${id}`).classList.toggle("hidden");
+    $(`details-${id}`).classList.toggle("hidden");
 }
 
 //------------------------------------ Adding Recipes ------------------------------------
@@ -361,7 +367,7 @@ async function addRecipe() {
             recipeNameInput.value.trim().charAt(0).toUpperCase() +
             recipeNameInput.value.trim().slice(1);
         const formattedIngredients = 
-            ingredientsInput.value.split(",")
+            ingredientsInput.value.split(/,|;|\n+/)
             .map(item => {
                 const parts = item.trim().split(/\s+/);
                 return {
@@ -427,6 +433,83 @@ async function addRecipe() {
     addRecipesBox.classList.toggle("hidden"); 
 }
 
+
+/*tryURLBtn.addEventListener("click", () => tryToAddRecipeFromURL(addRecipeURL.value));
+
+
+async function importRecipeFromUrl (url) { //GPT helped with this
+    const proxies = [
+        "https://corsproxy.io/?",
+        "https://api.allorigins.win/raw?url=",
+        "https://r.jina.ai/http://"
+    ]
+
+    let html = null;
+
+    for (let proxy of proxies) {
+        try {
+            const fullURL = proxy + encodeURIComponent(url);
+            const res = await fetch(fullURL); //res = responce
+            
+            if (!res.ok) throw new Error("bad responce");
+
+            html = await res.text();
+            //break;
+            console.log(`${proxy} worked!`)
+        }
+        catch (err) {
+            console.log(`proxy failed: ${proxy}`, err);
+        }
+    }
+
+    if (!html) { throw new Error("all proxies failed :(")}
+    
+    console.log(html)
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+
+    const scripts = doc.querySelectorAll('script[type="application/ld+json"]');
+    let recipe = null;
+
+    scripts.forEach(script => {
+        try {
+            const data = JSON.parse(script.textContent);
+
+            if (data["@type"] === "Recipe") {
+                recipe = data;
+            }
+
+            if (Array.isArray(data)) {
+                recipe = data.find(x => x["@type"] === "Recipe");
+            }
+        } catch (e) {}
+    });
+
+    if (!recipe) {
+        return null;
+    }
+
+    return {
+        name: recipe.name,
+        ingredients: recipe.recipeIngredient || [],
+        instructions: recipe.recipeInstructions
+    };
+}
+
+async function tryToAddRecipeFromURL(url) {
+    console.log("Trying url...")
+    const recipe = await importRecipeFromUrl(url);
+
+    if (recipe && recipe.name && recipe.ingredients) {
+        recipeNameInput.value = recipe.name;
+        ingredientsInput.value = recipe.ingredients.join(",");
+        instructionsInput.value = recipe.instructions;
+    }
+    else {
+        addRecipeFromURLBoxText.textContent = `Sorry, couldn't find recipe on the website "${url}". Make sure it is typed in correctly. You can also copy and paste from the website and format it below.`;
+    }
+    
+}*/
 
 //------------------------------------ Adding stuff to grocery list ------------------------------------//
 function addRecipeToList(id) {

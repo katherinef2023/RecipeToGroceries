@@ -42,7 +42,7 @@
     <div>
         <p>
             Please don't mind the formatting. I will fix this all later and make it pretty, but I'm just getting the basic javascript up and working first.
-            <br> Click the menu button to add recipes and look at your grocery list! Please create an account and sign in to add your own recipes.
+            <br> Click the menu button to add recipes and look at your grocery list! Create an account (or use email: "dummyemail@gmail.com" and password "password") and sign in to add your own recipes.
         </p>
         <p id="output" style="color: yellow"></p>
     </div>
@@ -53,9 +53,16 @@
             <p>
                 Put the recipe title in the first box, ingredients in the 2nd formatted like "1 tomato, 5 beans, 3 oranges", and instructions in the 3rd box, then add the recipe!
             </p>
-            <input placeholder="Recipe Name" id="recipeName"><br>
-            <textarea placeholder="Ingredients (ex. '1 Tomato, 4 eggs')" id="ingredients"></textarea><br>
-            <textarea placeholder="Instructions" id="instructions"></textarea><br>
+            <!--<button id="addRecipeFromURLBtn">Use URL</button>
+            <div class="hidden" id="addRecipeFromURLBox">
+                <p id="addRecipeFromURLBoxText">Please paste the link to your recipe here and correct any mistakes. Note: This may not work for all websites.</p>
+                <input placeholder="https://www.dummywebsite.com/recipe" style="width:100%;" id="addRecipeURL">
+                <button id="tryURLBtn" style="width:80px;">Try URL</button>
+
+            </div>-->
+            <input placeholder="Recipe Name" id="recipeNameInput"><br>
+            <textarea placeholder="Ingredients (ex. '1 Tomato, 4 eggs')" id="ingredientsInput"></textarea><br>
+            <textarea placeholder="Instructions" id="instructionsInput"></textarea><br>
             <button id="addBtn">Add Recipe</button>
         </div>
         
@@ -73,7 +80,7 @@
         
         <div class="flex" style="margin:0px">
             <h2>Recipe Search:</h2>
-            <input style="height:30px" id="recipeSearch">
+            <input style="height:30px" id="searchInput">
             <button id="searchBtn">Apply</button>
         </div>
         <div class="recipeContainer" id="recipeContainer"></div>

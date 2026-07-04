@@ -13,7 +13,13 @@ button {
     padding: 5px;
     margin: 5px;
     cursor: pointer;
+    background-color:rgb(210, 200, 220);
+    border-radius: 10%;
     font-family: 'Josefin Sans', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+ul {
+    padding: 5px;
 }
 
 input {
@@ -53,6 +59,7 @@ input[type="checkbox"] {
     flex-wrap: wrap;
     gap: 10px;
     align-items: center;
+    justify-content: center;
 }
 
 .details{
@@ -145,4 +152,20 @@ input[type="checkbox"] {
     padding: 25px;
     border-radius: 12px;
     width: 50%;
+    min-width: 350px;
+}
+
+#addRecipeFromURLBox {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    margin-bottom: 15px;
+    align-items: center;
+    background-color:rgb(124, 55, 140);
+}
+#addRecipeFromURLBox.hidden {
+    max-height: 0px;
+    padding: 0;
+    margin: 0;
 }

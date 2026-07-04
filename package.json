@@ -1,0 +1,24 @@
+{
+  "name": "recipetogroceries",
+  "version": "1.0.0",
+  "description": "<h1>Recipes to Groceries</h1>\r This will be a recipe sharing and grocery list making website where you can pick meals and automatically create a shopping list.\r <br><br>\r Test it <a target=\"_blank\" href=\"https://katherinef2023.github.io/RecipeToGroceries/\">here! </a>\r <br><br>\r <img width=\"1370\" height=\"908\" alt=\"recipesToGroceriesV1\" src=\"https://github.com/user-attachments/assets/945ad092-abaf-4551-b4d6-f24a8e21739f\" />\r <br><br>\r Eventually, it will include the following features:\r <ul>\r   <li>Create and share recipes</li>\r   <li>Use those recipes to create an ingredients list for grocery shopping</li>\r   <li>Seperate groceries into different stores for ease of shopping</li>\r   <li>Be completely free to use (hopefully!)</li>\r </ul>\r I'm also hoping to include these features if I can figure out how to do so:\r <ul>\r   <li>Import recipes from images</li>\r   <li>Import recipes from other websites</li>\r   <li>Combine similiar ingredients</li>\r   <li>Have unit conversions</li>\r </ul>",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/katherinef2023-ui/RecipeToGroceries.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/katherinef2023-ui/RecipeToGroceries/issues"
+  },
+  "homepage": "https://github.com/katherinef2023-ui/RecipeToGroceries#readme",
+  "dependencies": {
+    "fuse.js": "^7.4.2"
+  }
+}

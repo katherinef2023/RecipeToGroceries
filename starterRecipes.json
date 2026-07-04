@@ -120,6 +120,51 @@
     ],
     "instructions": "Preheat oven to 375 degrees Fahrenheit (190 degrees Celsius). Line three baking sheets with parchment paper and set aside.\nIn a medium bowl mix flour, baking soda, baking powder and salt. Set aside.\n\nCream together butter and sugars until combined.\nBeat in eggs and vanilla until light (about 1 minute).\nMix in the dry ingredients until combined.\nAdd chocolate chips and mix well.\nRoll 2-3 Tablespoons (depending on how large you like your cookies) of dough at a time into balls and place them evenly spaced on your prepared cookie sheets.\nBake in preheated oven for approximately 8-10 minutes. Take them out when they are just barely starting to turn brown.\nLet them sit on the baking pan for 5 minutes before removing to cooling rack.\n\nRecipe from https://joyfoodsunshine.com/the-most-amazing-chocolate-chip-cookies/#wprm-recipe-container-8678",
     "source": "starter"
+  },
+
+{
+    "id": "starter4",
+    "name": "Banana bread",
+    "ingredients": [
+      {
+        "amount": 2,
+        "name": "medium very ripe bananas"
+      },
+      {
+        "amount": 0.33,
+        "name": "cup butter"
+      },
+      {
+        "amount": 0.5,
+        "name": "teaspoon baking soda"
+      },
+      {
+        "amount": 1,
+        "name": "pinch salt"
+      },
+      {
+        "amount": 0.75,
+        "name": "cup sugar"
+      },
+      {
+        "amount": 1,
+        "name": "large egg"
+      },
+      {
+        "amount": 1,
+        "name": "teaspoon vanilla extract"
+      },
+      {
+        "amount": 1.5,
+        "name": "cups all-purpose flour"
+      }
+    ],
+    "instructions": "Preheat the oven to 350°F (175°C):\nButter an 8x4-inch loaf pan.\n\nIn a mixing bowl, mash the ripe bananas with a fork until completely smooth. Stir the melted butter into the mashed bananas.\n\nMix in the baking soda and salt. Stir in the sugar, beaten egg, and vanilla extract. Mix in the flour and cinnamon.\n\nPour the batter into your prepared loaf pan.\n\nBake for 55 to 65 minutes at 350°F (175°C), or until a toothpick or wooden skewer inserted into the center comes out clean. A few dry crumbs are okay; streaks of wet batter are not. If the outside of the loaf is browned but the center is still wet, loosely tent the loaf with foil and continue baking until the loaf is fully baked.\n\nCool and serve:\nRemove from oven and let cool in the pan for a few minutes. Then remove the banana bread from the pan and let cool completely before serving. Slice and serve. (A bread knife helps to make slices that aren't crumbly.)\n\nWrapped well, the banana bread will keep at room temperature for 4 days. For longer storage, refrigerate the loaf up to 5 days, or freeze it.\n\nRecipe from https://www.simplyrecipes.com/recipes/banana_bread/",
+    "source": "starter"
   }
+
+
+
+
 
 ]
