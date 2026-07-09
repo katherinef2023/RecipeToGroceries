@@ -1,2 +1,14 @@
-node_modules/
+**/node_modules/
 .vscode/
+
+
+.env
+.env.*
+
+.firebase/
+
+.DS_Store
+Thumbs.db
+
+dist/
+build/
