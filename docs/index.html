@@ -16,14 +16,14 @@
     <!--Also do Ctrl + Shift + R to hard refresh-->
     <div class="navBar">
         <a href="index.html"><img src="images/RecipesToGroceriesLogo.png" width="60px"></a>
-        <h3>Recipes to Groceries</h3>
+        <h2 style="padding-left: 5px">Recipes to Groceries</h2>
         <button id="navMenuBtn"><h1 style="margin:0">≡</h1></button>
         <button id="accountBtn"><img src="images/profileImagePlaceholder.png"></button>
     </div>
     
     <div id="navMenu" class="hidden">
-        <button id="groceryListBoxBtn">Grocery List</button>
-        <button id="addRecipesBoxBtn">Add a recipe</button>
+        <button id="groceryListBoxBtn" style="font-size:medium; padding: 10px">Grocery List</button>
+        <button id="addRecipesBoxBtn" style="font-size: medium; padding: 10px">Add a recipe</button>
     </div>
 
 
@@ -39,10 +39,13 @@
         </div>
     </div>
 
-    <div>
-        <p>
-            Please don't mind the formatting. I will fix this all later and make it pretty, but I'm just getting the basic javascript up and working first.
-            <br> Click the menu button to add recipes and look at your grocery list! Create an account (or use email: "dummyemail@gmail.com" and password "password") and sign in to add your own recipes.
+    <div class="flex">
+        <h2><br>How to use</h2>
+        <p style="font-size:large; padding-left: 5%; padding-right: 5%">
+            Welcome to Recipes to Groceries, your personal meal planner that creates a smart grocery list based on meals you select. 
+            Simply click "Add to List" on any recipe that sounds good and it will automatically add the ingredients to your grocery list, which you can access by pressing the "≡" button then "Grocery List". 
+            If you want to create/share your own recipes, please make an account by clicking the profile image in the top right. 
+            Then, you are free to add and publish recipes. You can also use the annonymous login (email: "dummyemail@gmail.com" and password: "password") to do the same.
         </p>
         <p id="output" style="color: yellow"></p>
     </div>
