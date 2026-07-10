@@ -52,9 +52,10 @@
         <div class="prettyOverlayFront">
             <h3 style="margin-bottom:0">Add Recipe</h3>
             <p>
-                Put the recipe title in the first box, ingredients in the 2nd formatted like "1 tomato, 5 beans, 3 oranges", and instructions in the 3rd box, then add the recipe! For the ingredients: new lines, commas, and semicolons work as seperators. Please put a numerical value (0.33, not 1/3) as the first part of each ingredient.
+                Put the recipe title in the first box, ingredients in the 2nd, and instructions in the 3rd box, then add the recipe! For the ingredients: new lines (press "enter") and semicolons (;) work as seperators. Please put a numerical value (0.33, not 1/3) as the first part of each ingredient.
             </p>
-            <!--<button id="addRecipeFromURLBtn">Use URL</button>
+            <!--The URL scraper works but i dont wanna pay so i got rid of it just in case.
+            <button id="addRecipeFromURLBtn">Use URL</button>
             <div class="hidden" id="addRecipeFromURLBox">
                 <p id="addRecipeFromURLBoxText">Please paste the link to your recipe here and correct any mistakes. Note: This may not work for all websites.</p>
                 <input placeholder="https://www.dummywebsite.com/recipe" style="width:100%;" id="addRecipeURL">
@@ -62,7 +63,7 @@
 
             </div>-->
             <input placeholder="Recipe Name" id="recipeNameInput"><br>
-            <textarea placeholder="Ingredients (ex. '1 Tomato, 4 eggs')" id="ingredientsInput"></textarea><br>
+            <textarea placeholder="Ingredients (seperate with a new line or a semicolon)" id="ingredientsInput"></textarea><br>
             <textarea placeholder="Instructions" id="instructionsInput"></textarea><br>
             <button id="addBtn">Add Recipe</button>
         </div>
@@ -86,7 +87,7 @@
         </div>
         <div class="recipeContainer" id="recipeContainer"></div>
     </div>
-    
+    <div id="recipeDetailsContainer" class="backgroundOverlay hidden"></div>
 
 
 <script type="module" src="script.js"></script>

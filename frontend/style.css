@@ -14,8 +14,9 @@ button {
     margin: 5px;
     color: black;
     cursor: pointer;
-    background-color:rgb(210, 200, 220);
+    background-color:rgb(215, 206, 226);
     border-radius: 5px;
+    border:0px;
     font-family: 'Josefin Sans', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -32,6 +33,12 @@ input[type="checkbox"] {
   transform: scale(1.5);
   margin-right: 10px;
 }
+
+textarea {
+    height: 200px;
+    resize: none;
+}
+
 .recipeCard {
     background: rgb(92, 37, 104);
     padding: 15px;
@@ -61,14 +68,6 @@ input[type="checkbox"] {
     gap: 10px;
     align-items: center;
     justify-content: center;
-}
-
-.details{
-    opacity: 1;
-}
-
-.details.hidden{
-    max-height: 0px;
 }
 
 .hidden {

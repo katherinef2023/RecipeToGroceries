@@ -16,6 +16,7 @@ import {
     getDocs,
     deleteDoc,
     updateDoc,
+    setDoc,
     doc
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 import {
@@ -65,6 +66,7 @@ const instructionsInput = $("instructionsInput");
 const searchInput = $("searchInput");
 const output = $("output");
 const recipeContainer = $("recipeContainer");
+const recipeDetailsContainer = $("recipeDetailsContainer");
 const groceryListContainer = $("groceryListContainer");
 const addRecipeFromURLBtn = $("addRecipeFromURLBtn");
 const addRecipeFromURLBox = $("addRecipeFromURLBox");
@@ -92,8 +94,7 @@ logoutBtn.addEventListener("click", logOut);
 
 async function signUp() {
     try {
-        const userCredential =
-            await createUserWithEmailAndPassword(
+        const userCredential = await createUserWithEmailAndPassword(
                 auth,
                 emailInput.value,
                 passwordInput.value
@@ -142,7 +143,9 @@ async function logOut() {
 //--------------------------------- Authorization --------------------------------------
 
 let currentUser = null;
-let userRecipes = []
+let userRecipes = [];
+let publicRecipes = [];
+
 
 onAuthStateChanged(auth, (user) => {
     currentUser = user;
@@ -196,8 +199,27 @@ async function loadStarterRecipes() {
 loadStarterRecipes();
 
 
+//public recipes
+async function loadPublicRecipes() {
+
+    const snapshot = await getDocs(collection(db, "publicRecipes"));
+
+    publicRecipes = [];
+
+    snapshot.forEach(docSnap => {
+        publicRecipes.push({
+            id: docSnap.id,
+            ...docSnap.data()
+        });
+    });
+
+    displayRecipes(getAllRecipes());
+}
+loadPublicRecipes();
+
+
 function getAllRecipes() {
-    return [...userRecipes, ...starterRecipes];
+    return [...userRecipes, ...starterRecipes, ...publicRecipes];
 }
 
 
@@ -210,10 +232,12 @@ function iHateAddingRecipesManually() {
 
 //------------------------------------ Reading input clicks  ------------------------------------//
 
+let editingId = null;
 
 addBtn.addEventListener("click", addRecipe);
 searchBtn.addEventListener("click", searchRecipe);
 recipeContainer.addEventListener("click", recipeCardClicked);
+recipeDetailsContainer.addEventListener("click", recipeCardClicked);
 
 
 //overlay handler
@@ -234,7 +258,7 @@ const toggles = [
     [navMenuBtn, navMenu],
     [groceryListBoxBtn, groceryListBox],
     [addRecipesBoxBtn, addRecipesBox],
-    [addRecipeFromURLBtn, addRecipeFromURLBox]
+    //[addRecipeFromURLBtn, addRecipeFromURLBox]
 ]
 
 //gives each button an event listener to hide stuff
@@ -247,6 +271,7 @@ toggles.forEach(([btn, element]) => {
 function recipeCardClicked(e) {
     const action = e.target.dataset.action;
     const id = e.target.dataset.id;
+    const recipe = userRecipes.find(r => r.id === id);
 
     if (action === "delete") {
         deleteRecipe(id);
@@ -260,14 +285,105 @@ function recipeCardClicked(e) {
     if (action == "toggle") {
         toggleDetails(id);
     }
+    if (action == "makePublic") {
+        if (recipe.public) {
+            unpublishRecipe(id);
+        } 
+        else {
+            makeRecipePublic(id);
+        }
+    }
 }
 
 
+//----------------------------- Make recipes public ------------------------------------//
+
+async function makeRecipePublic(id) {
+    const recipe = userRecipes.find(r => r.id === id);
+
+    if (!currentUser || !recipe) {
+        console.error("No user logged in or recipe not found");
+        return;
+    }
+
+    const publicId = `${id}public`;
+
+    const publicRecipe = {
+        name: recipe.name,
+        ingredients: recipe.ingredients,
+        instructions: recipe.instructions,
+        authorId: currentUser.uid,
+        public: true,
+        source: "public"
+    };
+
+    // Create/update public copy
+    await setDoc(
+        doc(db, "publicRecipes", publicId),
+        publicRecipe
+    );
+
+    // Mark original recipe as public
+    await updateDoc(
+        doc(db, "users", currentUser.uid, "recipes", id),
+        {
+            public: true
+        }
+    );
+
+    // Update local data
+    recipe.public = true;
+
+    publicRecipes = publicRecipes.filter(
+        r => r.id !== publicId
+    );
+
+    publicRecipes.push({
+        id: publicId,
+        ...publicRecipe
+    });
+
+    output.textContent = `${recipe.name} recipe published.`;
+    recipeDetailsContainer.classList.add("hidden");
+    displayRecipes();
+}
+
+
+
+async function unpublishRecipe(id) {
+    const recipe = userRecipes.find(r => r.id === id);
+
+    if (!recipe) return;
+
+    // remove public copy
+    await deleteDoc(doc(db, "publicRecipes", `${id}public`));
+
+    // update private recipe
+    await updateDoc(
+        doc(db, "users", currentUser.uid, "recipes", id),
+        {
+            public: false
+        }
+    );
+
+    // update local copy
+    recipe.public = false;
+
+    publicRecipes = publicRecipes.filter(
+        r => r.id !== `${id}public`
+    );
+
+    output.textContent = `${recipe.name} unpublished.`;
+    recipeDetailsContainer.classList.add("hidden");
+    displayRecipes();
+}
+
+
+
 //----------------------------- Search, edit, and delete Recipes ------------------------------------//
-let editingId = null;
 
 function editRecipe(id) {
-    
+    recipeDetailsContainer.classList.toggle("hidden");
     console.log("editing the thing")
     const recipe = userRecipes.find(r => r.id === id);
 
@@ -275,18 +391,26 @@ function editRecipe(id) {
     instructionsInput.value = recipe.instructions;
     ingredientsInput.value = recipe.ingredients
         .map(i => `${i.amount} ${i.name}`)
-        .join(", ");
+        .join("\n");
     editingId = id;
     addBtn.textContent = "Save changes";
-    addRecipesBox.classList.toggle("hidden"); 
+    addRecipesBox.classList.toggle("hidden");
 }
 
 
 async function deleteRecipe(id){
-    console.log("deleted the thing")
+    const recipe = userRecipes.find(r => r.id === id);
+    recipeDetailsContainer.classList.toggle("hidden");
     await deleteDoc(doc(db, "users", currentUser.uid, "recipes", id));
     userRecipes = userRecipes.filter(recipe => recipe.id !==id);
+
+    if (recipe.public === true) {
+        await deleteDoc(doc(db, "publicRecipes", id));
+        publicRecipes = publicRecipes.filter(recipe => recipe.id !==id);
+    }
+
     displayRecipes();
+    console.log("deleted the thing")
 }
 
 
@@ -321,30 +445,23 @@ function displayRecipes(recipeList=getAllRecipes()) {
                 <h3>${recipe.name}</h3>
                 <button class="toggle-btn" data-action="toggle" data-id="${recipe.id}">Show/Hide details</button>
                 <button class="addToList-btn" data-action="addToList" data-id="${recipe.id}">Add to List</button>
-                
-                <div class="details hidden" id="details-${recipe.id}">
-                    <ul>
-                        ${recipe.ingredients.map(i => `<li>${i.amount} ${i.name}</li>`).join("")}
-                    </ul>
-                    <p style="white-space: pre-line" >${recipe.instructions}</p>
-                </div>
             `;
         }
-        else{
+        else if (recipe.source==="user") {
             recipeCard.innerHTML = `
                 <h3>${recipe.name}</h3>
                 <button class="toggle-btn" data-action="toggle" data-id="${recipe.id}">Show/Hide details</button>
                 <button class="addToList-btn" data-action="addToList" data-id="${recipe.id}">Add to List</button>
                 
-                <div class="details hidden" id="details-${recipe.id}">
-                    <button class="delete-btn" data-action="delete" data-id="${recipe.id}">Delete</button>
-                    <button class="edit-btn" data-action="edit" data-id="${recipe.id}">Edit</button>
-                    
-                    <ul>
-                        ${recipe.ingredients.map(i => `<li>${i.amount} ${i.name}</li>`).join("")}
-                    </ul>
-                    <p style="white-space: pre-line" >${recipe.instructions}</p>
-                </div>
+            `;
+        }
+        else {
+            recipeCard.style.backgroundColor = "rgb(41, 94, 104)";
+            recipeCard.innerHTML = `
+                <h3>${recipe.name}</h3>
+                <button class="toggle-btn" data-action="toggle" data-id="${recipe.id}">Show/Hide details</button>
+                <button class="addToList-btn" data-action="addToList" data-id="${recipe.id}">Add to List</button>
+                
             `;
         }
         recipeContainer.appendChild(recipeCard);
@@ -353,7 +470,42 @@ function displayRecipes(recipeList=getAllRecipes()) {
 
 
 function toggleDetails(id) {
-    $(`details-${id}`).classList.toggle("hidden");
+    const recipe = getAllRecipes().find(r => r.id === id);
+    if(recipe.author === currentUser?.uid && recipe.source === "user"){
+        recipeDetailsContainer.innerHTML = `
+        <div class="prettyOverlayFront" style="gap:0" id="details-${recipe.id}">
+            
+            <div class="flex" style="margin:0">
+                <h2>${recipe.name}</h2>
+                <button style="margin-left: auto;" class="delete-btn" data-action="delete" data-id="${recipe.id}">Delete</button>
+                <button class="edit-btn" data-action="edit" data-id="${recipe.id}">Edit</button>
+                <button class="makePublic-btn" data-action="makePublic" data-id="${recipe.id}"> ${recipe.public ? "Unpublish" : "Make Public"}</button>
+            </div>
+            <h3 style="margin-bottom:0">Ingredients</h3>
+            <ul>
+                ${recipe.ingredients.map(i => `<li>${i.amount} ${i.name}</li>`).join("")}
+            </ul>
+            <h3 style="margin-bottom:0">Instructions</h3>
+            <p style="white-space: pre-line" >${recipe.instructions}</p>
+        </div>`;
+
+        recipeDetailsContainer.classList.toggle("hidden");
+    }
+    else{
+        recipeDetailsContainer.innerHTML = `
+        <div class="prettyOverlayFront" style="gap:0" id="details-${recipe.id}">
+            
+            <h2>${recipe.name}</h2>
+            <h3 style="margin-bottom:0">Ingredients</h3>
+            <ul>
+                ${recipe.ingredients.map(i => `<li>${i.amount} ${i.name}</li>`).join("")}
+            </ul>
+            <h3 style="margin-bottom:0">Instructions</h3>
+            <p style="white-space: pre-line" >${recipe.instructions}</p>
+        </div>`;
+
+        recipeDetailsContainer.classList.toggle("hidden");
+    }
 }
 
 //------------------------------------ Adding Recipes ------------------------------------
@@ -368,7 +520,7 @@ async function addRecipe() {
             recipeNameInput.value.trim().charAt(0).toUpperCase() +
             recipeNameInput.value.trim().slice(1);
         const formattedIngredients = 
-            ingredientsInput.value.split(/,|;|\n+/)
+            ingredientsInput.value.split(/;|\n+/)
             .map(item => {
                 const parts = item.trim().split(/\s+/);
                 return {
@@ -385,7 +537,8 @@ async function addRecipe() {
                 name: formattedName,
                 ingredients: formattedIngredients,
                 instructions: formattedInstructions,
-                source: "user"
+                source: "user",
+                author: currentUser.uid
             };
 
             userRecipes[index] = updatedRecipe;
@@ -408,7 +561,9 @@ async function addRecipe() {
                 name: formattedName,
                 ingredients: formattedIngredients,
                 instructions: formattedInstructions,
-                source: "user"
+                source: "user",
+                author: currentUser.uid,
+                public: false
             };
             output.textContent = `${recipe.name} recipe successfully added!`;
             
@@ -435,79 +590,50 @@ async function addRecipe() {
 }
 
 
-/*tryURLBtn.addEventListener("click", () => tryToAddRecipeFromURL(addRecipeURL.value));
+/* URL finding recipe feature disabled cuz might have to pay
+tryURLBtn.addEventListener("click", () => tryToAddRecipeFromURL(addRecipeURL.value));
 
 
-async function importRecipeFromUrl (url) { //GPT helped with this
-    const proxies = [
-        "https://corsproxy.io/?",
-        "https://api.allorigins.win/raw?url=",
-        "https://r.jina.ai/http://"
-    ]
-
-    let html = null;
-
-    for (let proxy of proxies) {
-        try {
-            const fullURL = proxy + encodeURIComponent(url);
-            const res = await fetch(fullURL); //res = responce
-            
-            if (!res.ok) throw new Error("bad responce");
-
-            html = await res.text();
-            //break;
-            console.log(`${proxy} worked!`)
+async function importRecipeFromUrl(url) { //gpt helped here
+    const response = await fetch(
+        "http://127.0.0.1:5001/recipes-to-groceries/us-central1/importRecipe",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                url: url
+            })
         }
-        catch (err) {
-            console.log(`proxy failed: ${proxy}`, err);
-        }
+    );
+
+
+    if (!response.ok) {
+        throw new Error("Function failed");
     }
 
-    if (!html) { throw new Error("all proxies failed :(")}
-    
-    console.log(html)
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
 
-    const scripts = doc.querySelectorAll('script[type="application/ld+json"]');
-    let recipe = null;
-
-    scripts.forEach(script => {
-        try {
-            const data = JSON.parse(script.textContent);
-
-            if (data["@type"] === "Recipe") {
-                recipe = data;
-            }
-
-            if (Array.isArray(data)) {
-                recipe = data.find(x => x["@type"] === "Recipe");
-            }
-        } catch (e) {}
-    });
-
-    if (!recipe) {
-        return null;
-    }
-
-    return {
-        name: recipe.name,
-        ingredients: recipe.recipeIngredient || [],
-        instructions: recipe.recipeInstructions
-    };
+    return await response.json();
 }
 
 async function tryToAddRecipeFromURL(url) {
     console.log("Trying url...")
-    const recipe = await importRecipeFromUrl(url);
+    addRecipeFromURLBoxText.textContent = `Trying to find recipe...`;
+    
+    try {
+        const recipe = await importRecipeFromUrl(url);
 
-    if (recipe && recipe.name && recipe.ingredients) {
         recipeNameInput.value = recipe.name;
-        ingredientsInput.value = recipe.ingredients.join(",");
+        ingredientsInput.value = recipe.ingredients.join("\n");
         instructionsInput.value = recipe.instructions;
+        
+        addRecipeFromURLBoxText.textContent = `Sucess! Please edit the recipe to your liking then click "Add Recipe"! Or, enter a new url to change the recipe.`;
+        addRecipeFromURLBox.classList.add("hidden");
     }
-    else {
-        addRecipeFromURLBoxText.textContent = `Sorry, couldn't find recipe on the website "${url}". Make sure it is typed in correctly. You can also copy and paste from the website and format it below.`;
+    catch (err) {
+        console.error(err)
+        addRecipeFromURLBoxText.textContent = `Sorry, couldn't find recipe on the website "${url}". Some websites don't work on this (for example, Allrecipes). You can also copy and paste from the website and format it below.`;
     }
     
 }*/
@@ -523,31 +649,20 @@ function addRecipeToList(id) {
 
     groceryList.forEach(item => { //adds up all the ingredients
 
-        const normalizedName = normalizeIngredients(item.name)
-        const match = findMatch(normalizedName, combinedGroceryList)
+        const match = findMatch(item.name, combinedGroceryList)
 
 
         if (combinedGroceryList[match]) {
             combinedGroceryList[match] += item.amount;
         }
         else {
-            combinedGroceryList[normalizedName] = item.amount;
+            combinedGroceryList[item.name] = item.amount;
         }
     });
 
     groceryListContainer.innerHTML = Object.entries(combinedGroceryList)
         .map(([name, amount]) => `<li style="list-style-type: none"><input type="checkbox">${amount} ${name}</li>`).join("");
 
-}
-
-function normalizeIngredients(name) {
-    return name
-    .toLowerCase()
-    .trim()
-    .replace(/ies$/, "y")
-    .replace(/ves$/, "f")
-    .replace(/es$/, "")
-    .replace(/s$/, "");
 }
 
 function findMatch(name, combinedList) {

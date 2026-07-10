@@ -2,6 +2,7 @@
   {
     "id": "starter1",
     "source": "starter",
+    "author": "simplyrecipes.com",
     "name": "Lemon Bars",
     "ingredients": [
       {
@@ -43,6 +44,7 @@
   {
     "id": "starter2",
     "source": "starter",
+    "author": "Kat F.",
     "name": "Burritos",
     "ingredients": [
       {
@@ -76,6 +78,8 @@
 {
     "id": "starter3",
     "name": "Chocolate Chip Cookies",
+    "source": "starter",
+    "author": "joyfoodsunshine.com",
     "ingredients": [
       {
         "amount": 1,
@@ -118,13 +122,14 @@
         "name": "cups chocolate chips (12 oz)"
       }
     ],
-    "instructions": "Preheat oven to 375 degrees Fahrenheit (190 degrees Celsius). Line three baking sheets with parchment paper and set aside.\nIn a medium bowl mix flour, baking soda, baking powder and salt. Set aside.\n\nCream together butter and sugars until combined.\nBeat in eggs and vanilla until light (about 1 minute).\nMix in the dry ingredients until combined.\nAdd chocolate chips and mix well.\nRoll 2-3 Tablespoons (depending on how large you like your cookies) of dough at a time into balls and place them evenly spaced on your prepared cookie sheets.\nBake in preheated oven for approximately 8-10 minutes. Take them out when they are just barely starting to turn brown.\nLet them sit on the baking pan for 5 minutes before removing to cooling rack.\n\nRecipe from https://joyfoodsunshine.com/the-most-amazing-chocolate-chip-cookies/#wprm-recipe-container-8678",
-    "source": "starter"
+    "instructions": "Preheat oven to 375 degrees Fahrenheit (190 degrees Celsius). Line three baking sheets with parchment paper and set aside.\nIn a medium bowl mix flour, baking soda, baking powder and salt. Set aside.\n\nCream together butter and sugars until combined.\nBeat in eggs and vanilla until light (about 1 minute).\nMix in the dry ingredients until combined.\nAdd chocolate chips and mix well.\nRoll 2-3 Tablespoons (depending on how large you like your cookies) of dough at a time into balls and place them evenly spaced on your prepared cookie sheets.\nBake in preheated oven for approximately 8-10 minutes. Take them out when they are just barely starting to turn brown.\nLet them sit on the baking pan for 5 minutes before removing to cooling rack.\n\nRecipe from https://joyfoodsunshine.com/the-most-amazing-chocolate-chip-cookies/#wprm-recipe-container-8678"
   },
 
 {
     "id": "starter4",
     "name": "Banana bread",
+    "source": "starter",
+    "author": "simplyrecipes.com",
     "ingredients": [
       {
         "amount": 2,
@@ -159,14 +164,15 @@
         "name": "cups all-purpose flour"
       }
     ],
-    "instructions": "Preheat the oven to 350°F (175°C):\nButter an 8x4-inch loaf pan.\n\nIn a mixing bowl, mash the ripe bananas with a fork until completely smooth. Stir the melted butter into the mashed bananas.\n\nMix in the baking soda and salt. Stir in the sugar, beaten egg, and vanilla extract. Mix in the flour and cinnamon.\n\nPour the batter into your prepared loaf pan.\n\nBake for 55 to 65 minutes at 350°F (175°C), or until a toothpick or wooden skewer inserted into the center comes out clean. A few dry crumbs are okay; streaks of wet batter are not. If the outside of the loaf is browned but the center is still wet, loosely tent the loaf with foil and continue baking until the loaf is fully baked.\n\nCool and serve:\nRemove from oven and let cool in the pan for a few minutes. Then remove the banana bread from the pan and let cool completely before serving. Slice and serve. (A bread knife helps to make slices that aren't crumbly.)\n\nWrapped well, the banana bread will keep at room temperature for 4 days. For longer storage, refrigerate the loaf up to 5 days, or freeze it.\n\nRecipe from https://www.simplyrecipes.com/recipes/banana_bread/",
-    "source": "starter"
+    "instructions": "Preheat the oven to 350°F (175°C):\nButter an 8x4-inch loaf pan.\n\nIn a mixing bowl, mash the ripe bananas with a fork until completely smooth. Stir the melted butter into the mashed bananas.\n\nMix in the baking soda and salt. Stir in the sugar, beaten egg, and vanilla extract. Mix in the flour and cinnamon.\n\nPour the batter into your prepared loaf pan.\n\nBake for 55 to 65 minutes at 350°F (175°C), or until a toothpick or wooden skewer inserted into the center comes out clean. A few dry crumbs are okay; streaks of wet batter are not. If the outside of the loaf is browned but the center is still wet, loosely tent the loaf with foil and continue baking until the loaf is fully baked.\n\nCool and serve:\nRemove from oven and let cool in the pan for a few minutes. Then remove the banana bread from the pan and let cool completely before serving. Slice and serve. (A bread knife helps to make slices that aren't crumbly.)\n\nWrapped well, the banana bread will keep at room temperature for 4 days. For longer storage, refrigerate the loaf up to 5 days, or freeze it.\n\nRecipe from https://www.simplyrecipes.com/recipes/banana_bread/"
+
   },
 
 {
     "id": "starter5",
     "name": "Grilled Cheese",
     "source": "starter",
+    "author": "Kat F.",
     "instructions": "Heat tomato soup on medium heat in a pot. Heat a pan on medium high with butter, then put the cheese inside bread onto the pan. Spread half of the mayo on top and cook 30 seconds. Flip sandwich and spread the other half of the mayo. Grill and flip until toast is browned to your liking. \n\nSlice sandwiches into triangles and serve with soup.",
     "ingredients": [
       {
