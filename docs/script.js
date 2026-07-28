@@ -730,13 +730,13 @@ function addRecipeToList(id) {
     });
 
     groceryListContainer.innerHTML = Object.entries(combinedGroceryList)
-        .map(([name, amount]) => `<li style="list-style-type: none"><input type="checkbox">${amount} ${name}</li>`).join("");
+        .map(([name, amount]) => `<li style="list-style-type: none; margin-bottom: 8px; font-size: 1.2rem"><input type="checkbox"">${amount} ${name}</li>`).join("");
 
 }
 
 function findMatch(name, combinedList) {
     const fuse = new Fuse(Object.keys(combinedList), { //imported from Fuse
-        threshold: 0.4,
+        threshold: 0.2,
         ignoreLocation: true
     });
 
