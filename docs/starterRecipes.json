@@ -1,5 +1,5 @@
 [
-  {
+{
     "id": "starter1",
     "source": "starter",
     "author": "simplyrecipes.com",
@@ -41,19 +41,19 @@
     "instructions": "Preheat oven to 350F. (Adjusting rack so it is in the middle of the oven)\n\nFor the crust: \nIn a food processor (or blender) mix the flour and brown sugar until fully incorporated. Add COLD butter to the flour mixture and pulse, using short bursts, until the butter is cut into tiny pea-sized pieces and the dough appears lumpy.\n\nSpread dough as evenly as possible in an ungreased 13 x 9 x 2 pan. Press down with a spatula to create a packed surface. Place pan in the center of oven and bake until golden, approx. 20 mins).\nFor the filling:\nIn a medium bowl, beat eggs with an electric mixer until well blended. Add vanilla extract and ¾ cup powdered sugar and mix well. Add lemon juice and remaining powdered sugar. Continue to mix until powdered sugar is dissolved, mix in lemon zest.\nRemove crust from oven and reduce oven temperature to 300F. Immediately pour lemon filling mixture over hot crust. Return to oven and continue to cook for an additional 30 mins. Cool bars completely before cutting. Sprinkle with powdered sugar and serve.\n\n Recipe from https://www.simplehealthykitchen.com/lemon-bars/#recipe"
   },
 
-  {
+{
     "id": "starter2",
     "source": "starter",
     "author": "Kat F.",
     "name": "Burritos",
     "ingredients": [
       {
-        "amount": 1,
+        "amount": 0.5,
         "name": "pack of flour tortillas"
       },
       {
-        "amount": 4,
-        "name": "bell pepper"
+        "amount": 2,
+        "name": "bell peppers"
       },
       {
         "amount": 1,
@@ -196,9 +196,124 @@
         "amount": 1
       }
     ]
+  },
+
+{
+    "id": "starter6",
+    "name": "Buffalo Chicken Wings",
+    "source": "starter",
+    "author": "Better Homes and Garden Cookbook",
+    "instructions": "1. Cut off and discard wing tips. Cut each wing into 2 sections, rinse and pat dry. \n 2. In a foil-lined baking pan, put wing sin a single layer and bake at 375F for 20 minutes \n 3. Meanwhile, in a small saucepan melt the margarine/butter. Stir in hot pepper sauce. Drain off fat from wings. Brush wings with margarine-pepper sauxe mixture. Back 10 minutes more. Turn wings over and brush with mixture again. Bake 5-10 minutes more or until no longer pink and tender. Makes 24 pieces.",
+    "ingredients": [
+      {
+        "name": "chicken wings",
+        "amount": 12
+      },
+      {
+        "name": "tablespoons margarine or butter",
+        "amount": 2
+      },
+      {
+        "name": "tablespoons hot pepper sauce",
+        "amount": 3
+      }
+    ]
+  },
+
+{
+    "id": "starter7",
+    "name": "Egg rolls",
+    "source": "starter",
+    "author": "Better Homes and Garden Cookbook",
+    "instructions": "1. Make pork filling as follows. Cook ground pork, gingerroot, and garlic for 2 to 3 minutes; drain fat. Add bok choy or cabbage, water chestnuts, carrot, and onion. Stir-fry 2 more minutes. Combine soy sauce, cornstarch, sigar, and a pinch of salt. Add and stir fry for 1 more minute. \n\n 2. For each egg roll, place an egg roll skin on a flat surface. Spoon 1/4 cup pork filling across and just below center of egg roll skin. Fold bottom corner over filling, tucking it under on the other side. Fold side corners over filling, forming an envelope shape. Roll egg roll toward remaining corner. Moisten top corner with water and press firmly to seal. \n\n 3. In a heavy saucepan or deep-fat fryer heat 2 inches melted shortening to 365F. Fry egg rolls, a few at a time, 2 to 3 minute or until golden-brown. Drain on paper towels. Makes 8 egg rolls.",
+    "ingredients": [
+      {
+        "name": "pounds ground pork",
+        "amount": 0.5
+      },
+      {
+        "name": "teaspoon grated gingerroot",
+        "amount": 1
+      },
+      {
+        "name": "clove garlic",
+        "amount": 1
+      },
+      {
+        "name": "cup of chopped bok choy or cabbage",
+        "amount": 0.5
+      },
+      {
+        "name": "cup chopped water chestnuts",
+        "amount": 0.5
+      },
+      {
+        "name": "cup shredded carrot",
+        "amount": 0.5
+      },
+      {
+        "name": "tablespoons soy sauce",
+        "amount": 2
+      },
+      {
+        "name": "teaspoons cornstarch",
+        "amount": 2
+      },
+      {
+        "name": "teaspoon sugar",
+        "amount": 0.5
+      },
+      {
+        "name": "cup finely chopped onion",
+        "amount": 0.25
+      },
+      {
+        "name": "egg skin rolls",
+        "amount": 8
+      }
+    ]
+  },
+
+{
+    "id": "starter8",
+    "name": "Spanish Rice",
+    "source": "starter",
+    "author": "Better Homes and Garden Cookbook",
+    "instructions": "In a large skillet cook onion, sweet pepper, and garlic in hot oil until tender. Stir in undrained tomatoes, uncooked rice, sugar, chili powder, hot pepper, a pinch of pepper, and 1 cup water. Bring to boiling and reduce heat. Cover and simmer for 20-25 minutes. Makes about 5 cups.",
+    "ingredients": [
+      {
+        "name": "cup chopped onion",
+        "amount": 0.5
+      },
+      {
+        "name": "cup chopped green sweet pepper",
+        "amount": 0.5
+      },
+      {
+        "name": "clove minced garlic",
+        "amount": 1
+      },
+      {
+        "name": "tablespoon cooking oil",
+        "amount": 1
+      },
+      {
+        "name": "28-ounce can of cut tomatoes",
+        "amount": 1
+      },
+      {
+        "name": "cup long-grain rice",
+        "amount": 0.75
+      },
+      {
+        "name": "teaspoon sugar",
+        "amount": 1
+      },
+      {
+        "name": "teaspoon chili powder",
+        "amount": 1
+      }
+    ]
   }
-
-
-
 
 ]

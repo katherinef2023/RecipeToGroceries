@@ -10,7 +10,7 @@ div {
 }
 
 button {
-    padding: 5px;
+    padding: 8px;
     margin: 5px;
     color: black;
     cursor: pointer;
@@ -18,8 +18,18 @@ button {
     border-radius: 5px;
     border:0px;
     font-family: 'Josefin Sans', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+.cookModeBtn {
+    max-width: 125px;
+    padding:8px;
+}
+ 
 ul {
     padding: 5px;
 }
@@ -37,6 +47,7 @@ input[type="checkbox"] {
 textarea {
     height: 200px;
     resize: none;
+    min-height: 50px;
 }
 
 .recipeCard {
@@ -44,8 +55,13 @@ textarea {
     padding: 15px;
     margin: 10px;
     border-radius: 10px;
-    max-width: 400px;
-    min-width: 250px;
+    width: 300px;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.recipeCard:hover {
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .recipeContainer {

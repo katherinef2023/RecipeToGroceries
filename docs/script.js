@@ -57,14 +57,19 @@ const groceryListBox = $("groceryListBox");
 const addRecipesBoxBtn = $("addRecipesBoxBtn");
 const addRecipesBox = $("addRecipesBox")
 const accountBtn = $("accountBtn");
+
 const loginOverlay = $("loginOverlay");
+
 const searchBtn = $("searchBtn");
 const addBtn = $("addBtn");
+
 const recipeNameInput = $("recipeNameInput");
 const ingredientsInput = $("ingredientsInput");
 const instructionsInput = $("instructionsInput");
+const addRecipeURL = $("addRecipeURL")
 const searchInput = $("searchInput");
 const output = $("output");
+
 const recipeContainer = $("recipeContainer");
 const recipeDetailsContainer = $("recipeDetailsContainer");
 const groceryListContainer = $("groceryListContainer");
@@ -72,7 +77,6 @@ const addRecipeFromURLBtn = $("addRecipeFromURLBtn");
 const addRecipeFromURLBox = $("addRecipeFromURLBox");
 const addRecipeFromURLBoxText = $("addRecipeFromURLBoxText");
 const tryURLBtn = $("tryURLBtn");
-const addRecipeURL = $("addRecipeURL")
 
 const backgroundOverlay = document.querySelectorAll(".backgroundOverlay");
 const groceryList = [];
@@ -161,7 +165,6 @@ onAuthStateChanged(auth, (user) => {
 });
 
 
-
 //------------------------------- Loading recipes ---------------------------------
 
 
@@ -190,7 +193,7 @@ async function loadUserRecipes() {
 }
 
 //Loads starting recipes
-const starterRecipes = []
+let starterRecipes = []
 async function loadStarterRecipes() {
     const response = await fetch("starterRecipes.json");
     starterRecipes.push(...await response.json());
@@ -278,6 +281,9 @@ function recipeCardClicked(e) {
     }
     if (action === "edit") {
         editRecipe(id);
+    }
+    if (action === "cookModeBtn") {
+        cookModeBtnClicked();
     }
     if (action === "addToList") {
         addRecipeToList(id);
@@ -474,17 +480,18 @@ function toggleDetails(id) {
     if(recipe.author === currentUser?.uid && recipe.source === "user"){
         recipeDetailsContainer.innerHTML = `
         <div class="prettyOverlayFront" style="gap:0" id="details-${recipe.id}">
-            
-            <div class="flex" style="margin:0">
-                <h2>${recipe.name}</h2>
-                <button style="margin-left: auto;" class="delete-btn" data-action="delete" data-id="${recipe.id}">Delete</button>
+            <h2>${recipe.name}</h2>
+            <div class="flex" style="margin:0;">
+                
+                <button class="delete-btn" data-action="delete" data-id="${recipe.id}">Delete</button>
                 <button class="edit-btn" data-action="edit" data-id="${recipe.id}">Edit</button>
-                <button class="makePublic-btn" data-action="makePublic" data-id="${recipe.id}"> ${recipe.public ? "Unpublish" : "Make Public"}</button>
+                <button class="makePublic-btn" style="margin-right: auto;" data-action="makePublic" data-id="${recipe.id}"> ${recipe.public ? "Unpublish" : "Make Public"}</button>
             </div>
             <h3 style="margin-bottom:0">Ingredients</h3>
             <ul>
                 ${recipe.ingredients.map(i => `<li>${i.amount} ${i.name}</li>`).join("")}
             </ul>
+            <button class="cookModeBtn" data-action="cookModeBtn">Cook Mode: ${wakeLock ? "ON" : "OFF"}</button>
             <h3 style="margin-bottom:0">Instructions</h3>
             <p style="white-space: pre-line" >${recipe.instructions}</p>
         </div>`;
@@ -495,11 +502,13 @@ function toggleDetails(id) {
         recipeDetailsContainer.innerHTML = `
         <div class="prettyOverlayFront" style="gap:0" id="details-${recipe.id}">
             
-            <h2>${recipe.name}</h2>
+            <h2 style="margin-bottom:">${recipe.name}</h2>
+            <h3 style="margin:0px"> ${recipe.author ? `Author: ${recipe.author}` : ""}</h3>
             <h3 style="margin-bottom:0">Ingredients</h3>
             <ul>
                 ${recipe.ingredients.map(i => `<li>${i.amount} ${i.name}</li>`).join("")}
             </ul>
+            <button class="cookModeBtn" data-action="cookModeBtn">Cook Mode: ${wakeLock ? "ON" : "OFF"}</button>
             <h3 style="margin-bottom:0">Instructions</h3>
             <p style="white-space: pre-line" >${recipe.instructions}</p>
         </div>`;
@@ -508,7 +517,67 @@ function toggleDetails(id) {
     }
 }
 
+
+//------------------------------- Cook mode ---------------------------------
+
+
+let wakeLock = null;
+
+function cookModeBtnClicked() {
+    if (wakeLock) {
+        deactivateCookMode();
+    }
+    else {
+        activateCookMode();
+    }
+}
+
+async function activateCookMode() {
+    try {
+        // Request a screen wake lock
+        wakeLock = await navigator.wakeLock.request('screen');
+
+        wakeLock.addEventListener("release", () => {
+            console.log("Wake lock released.");
+            wakeLock = null;
+        });
+
+        console.log('Cook mode activated.');
+
+        const cookModeBtns = document.querySelectorAll('[data-action="cookModeBtn"]');
+        cookModeBtns.forEach(btn => {
+        btn.innerHTML = "Cook Mode: ON";});
+        
+    }
+    catch (err) {
+        console.error(`${err.name}, ${err.message}`);
+    }
+}
+
+async function deactivateCookMode() {
+    if (!wakeLock) return;
+
+    await wakeLock.release();
+    console.log('Cook mode deactivated.');
+
+    const cookModeBtns = document.querySelectorAll('[data-action="cookModeBtn"]');
+        cookModeBtns.forEach(btn => {
+        btn.innerHTML = "Cook Mode: OFF";});
+
+
+}
+
+//reactivates cook mode when coming back to page
+document.addEventListener("visibilitychange", async () => {
+  if (wakeLock && document.visibilityState === 'visible') {
+    await activateCookMode();
+  }
+});
+
+
 //------------------------------------ Adding Recipes ------------------------------------
+
+
 async function addRecipe() {
     if (!currentUser) {
     output.textContent = "You must be logged in to add recipes";
